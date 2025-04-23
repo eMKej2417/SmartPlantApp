@@ -1,0 +1,93 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/backgroundColor">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/rounded_bg"
+        android:clipToOutline="true"
+        android:elevation="10dp"
+        android:outlineProvider="background"
+        android:padding="10dp"
+        tools:context=".MainActivity">
+
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="327dp"
+            android:layout_height="68dp"
+            android:contentDescription="@string/logo_desc"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/dropletIcon"
+            android:layout_width="118dp"
+            android:layout_height="158dp"
+            android:contentDescription="@string/moisture_icon"
+            android:src="@drawable/droplet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logoImage" />
+
+        <TextView
+            android:id="@+id/percentageText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="100%"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="60sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/dropletIcon"
+            app:layout_constraintTop_toTopOf="@id/dropletIcon" />
+
+        <TextView
+            android:id="@+id/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:text="Last updated:\n18/04/2025 22:51"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/percentageText"
+            app:layout_constraintTop_toBottomOf="@id/percentageText" />
+
+        <ImageView
+            android:id="@+id/refreshIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/refresh"
+            android:src="@drawable/ic_refresh"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/percentageText" />
+
+        <ImageView
+            android:id="@+id/settingsIcon"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:contentDescription="@string/settings"
+            android:src="@drawable/ic_settings"
+            app:layout_constraintEnd_toEndOf="@id/refreshIcon"
+            app:layout_constraintTop_toBottomOf="@id/refreshIcon" />
+
+        <Switch
+            android:id="@+id/themeToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/dark_mode"
+            android:textColor="@color/primaryTextColor"
+            app:layout_constraintStart_toStartOf="@id/dropletIcon"
+            app:layout_constraintTop_toBottomOf="@id/dropletIcon" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

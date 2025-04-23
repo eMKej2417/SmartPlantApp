@@ -1,0 +1,4 @@
+<resources>
+    <attr name="backgroundColor" format="color"/>
+    <attr name="cardBackgroundColor" format="color"/>
+</resources>
