@@ -1,0 +1,17 @@
+function doGet() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1"); // replace with your sheet name
+  const data = sheet.getDataRange().getValues();
+
+  // Get last row with actual data
+  let lastRow = data.length - 1;
+  while (lastRow > 0 && data[lastRow][0] === "") {
+    lastRow--;
+  }
+
+  const row = data[lastRow];
+
+  return ContentService.createTextOutput(JSON.stringify({
+    timestamp: row[0],
+    moisture: row[3]
+  })).setMimeType(ContentService.MimeType.JSON);
+}
