@@ -1,0 +1,66 @@
+#include <ESP8266WiFi.h>
+#include <WiFiClientSecure.h>
+
+// Wi-Fi credentials
+const char* ssid = "A54_5G";
+const char* password = "MopiczkaInternet";
+
+// Google Apps Script Web App URL
+const char* host = "script.google.com";
+const int httpsPort = 443;
+const char* path = "/macros/s/AKfycbx8f_FrrRDXSpcuQy37khvHvDZ_Z47zioeABho7lAkKz69LaW_h2CNBFJomtl-k3SX2/exec";
+
+// Moisture sensor calibration
+const int DRY_VALUE = 653;
+const int WET_VALUE = 560;
+#define SENSOR_PIN A0
+
+void setup() {
+  Serial.begin(9600);
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to Wi-Fi");
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("\n✅ Wi-Fi connected!");
+}
+
+void loop() {
+  // Read sensor values
+  int raw = analogRead(SENSOR_PIN);
+  float voltage = raw * (3.3 / 1023.0);
+  int moisture = map(raw, DRY_VALUE, WET_VALUE, 0, 100);
+  moisture = constrain(moisture, 0, 100);
+
+  // Display locally
+  Serial.println("📊 Raw: " + String(raw));
+  Serial.println("⚡ Voltage: " + String(voltage, 2));
+  Serial.println("💧 Moisture: " + String(moisture) + "%");
+
+  // Prepare secure connection
+  WiFiClientSecure client;
+  client.setInsecure();
+
+  if (!client.connect(host, httpsPort)) {
+    Serial.println("❌ Connection failed");
+    delay(10000);
+    return;
+  }
+
+  // Send GET request
+  String fullPath = String(path) +
+                    "?value=" + String(raw) +
+                    "&voltage=" + String(voltage, 2) +
+                    "&moisture=" + String(moisture);
+
+  client.print(String("GET ") + fullPath + " HTTP/1.1\r\n" +
+               "Host: " + host + "\r\n" +
+               "Connection: close\r\n\r\n");
+
+  client.stop();
+  Serial.println("✅ Data sent to Google Sheets");
+  delay(900000);
+}
